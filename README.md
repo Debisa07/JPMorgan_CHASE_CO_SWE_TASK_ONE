@@ -1,1 +1,2 @@
-# JPMorgan_CHASE_CO_task_one
+# JPMC Task 1
+Starter repo for task 1 of the JPMC software engineering program
