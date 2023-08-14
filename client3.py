@@ -18,6 +18,10 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 
+# Debisa Abebe  debisaabebe27@gmailcom
+# Client3.py updated to get the ratio of prices of two stocks
+# solution for task 1 of JPMC tech task
+
 import json
 import random
 import urllib.request
@@ -30,8 +34,7 @@ N = 500
 
 
 def getDataPoint(quote):
-    """ Produce all the needed values to generate a datapoint """
-    """ ------------- Update this function ------------- """
+    """ Produce all of the needed values to generate a datapoint """
     stock = quote['stock']
     bid_price = float(quote['top_bid']['price'])
     ask_price = float(quote['top_ask']['price'])
@@ -40,20 +43,26 @@ def getDataPoint(quote):
 
 
 def getRatio(price_a, price_b):
-    """ Get ratio of price_a and price_b """
-    """ ------------- Update this function ------------- """
-    return 1
+	""" Get ratio of price_a and price_b """
+	if (price_b == 0):
+		return
+	return price_a/price_b
 
 
 # Main
 if __name__ == "__main__":
-    # Query the price once every N seconds.
-    for _ in iter(range(N)):
-        quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
 
-        """ ----------- Update to get the ratio --------------- """
-        for quote in quotes:
-            stock, bid_price, ask_price, price = getDataPoint(quote)
-            print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
+	# Query the price once every N seconds.
+	for _ in range(N):
+		quotes = json.loads(urllib.request.urlopen(
+		    QUERY.format(random.random())).read())
 
-        print("Ratio %s" % getRatio(price, price))
+		""" ----------- Update to get the ratio --------------- """
+		prices = {}
+		for quote in quotes:
+			stock, bid_price, ask_price, price = getDataPoint(quote)
+			prices[stock] = price
+			print("Quoted %s at (bid:%s, ask:%s, price:%s)" %
+			      (stock, bid_price, ask_price, price))
+
+		print("Ratio %s" % getRatio(prices['ABC'], prices['DEF']))
